@@ -2,6 +2,7 @@
 
 - I considered the 16-pokemon limit to be a design-requirement rather than a technical/memory one
 - Search: This from a UX perspective, I think the typical autocomplete box makes a lot more sense because you can just use the down arrows to select an option. It's of course not as aesthetically appealing.
+- I haven't worked with nextJS for a long time
 
 ## Getting Started
 
