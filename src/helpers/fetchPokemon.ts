@@ -1,10 +1,6 @@
 import { PokemonListItem } from '@/types'
-import { Client, cacheExchange, fetchExchange, gql } from '@urql/core'
-
-const client = new Client({
-  url: 'https://beta.pokeapi.co/graphql/v1beta',
-  exchanges: [cacheExchange, fetchExchange],
-})
+import { gql } from '@urql/core'
+import { pokeAPIGraphQLClient } from './pokeAPIGraphQLClient'
 
 const QUERY = gql`
   query ($limit: Int = 16, $offset: Int = 0) {
@@ -51,7 +47,7 @@ const QUERY = gql`
 
 export const fetchPokemon = async (offset: number, limit?: number) => {
   // FIXME: error-resistant
-  const result = await client.query(QUERY, { offset, limit })
+  const result = await pokeAPIGraphQLClient.query(QUERY, { offset, limit })
   // TODO: With more configuration, we can generate automatic types for the
   // GraphQL schema, for now, this will do…
   const data: Record<string, any>[] = result.data.pokemon_v2_pokemonspecies
@@ -60,9 +56,11 @@ export const fetchPokemon = async (offset: number, limit?: number) => {
     name: pokemon.pokemon_v2_pokemonspeciesnames[0].name,
     id: pokemon.id,
     slug: pokemon.name,
+    // For further optimisation, I'd just return an idea of types and return an
+    // overview of localised type names as well
     types: pokemon.pokemon_v2_pokemons[0].pokemon_v2_pokemontypes.map(
       (type) => type.pokemon_v2_type.pokemon_v2_typenames[0].name
     ),
-    // sprite:
+    // sprite (for search)
   }))
 }
