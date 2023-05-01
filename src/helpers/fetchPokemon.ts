@@ -55,13 +55,6 @@ export const fetchPokemon = async () => {
     types: pokemon.pokemon_v2_pokemontypes.map(
       (type) => type.pokemon_v2_type.name
     ),
-    // TODO: lots of opportunity for optimisation here of course. First of all,
-    // I'd never dream to hotlink to someone else's server, but I'm not
-    // currently sure how to tell nextjs to optimise images that will only have
-    // a dynamic reference to them (i.e. <Image src={pokemon.image} />).
-    // Alternatively we could download and pre-process the images ourselves or
-    // serve them from a service that supports in-url transformations.
-    image: `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/${pokemon.pokemon_species_id}.png`,
     // sprite:
   }))
 }
