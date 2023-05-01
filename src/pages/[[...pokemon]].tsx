@@ -94,7 +94,7 @@ export const getServerSideProps: GetServerSideProps = async (props) => {
     // so we know what grid to figure out what starting index to use
     detailed = await fetchPokemonDetails(pokemonSlug)
     // When we load the page, we want to load the pokemon surrounding the
-    // selected pokemon
+    // selected pokemon. This isn't 100% accurate yet I'm afraid.
     startIndex = Math.round(detailed.id / limitPerPage) * limitPerPage
     // Load a pokemon in the detailed var
     // then based on the ID, set the startIndex
