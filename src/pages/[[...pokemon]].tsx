@@ -1,5 +1,4 @@
 import React from 'react'
-import Image from 'next/image'
 import { Inter } from 'next/font/google'
 import { fetchPokemon } from '@/helpers/fetchPokemon'
 import { PokemonListItem } from '@/types'
@@ -30,8 +29,27 @@ export default function Home(props: Props) {
 }
 
 // This gets called on every request
-export const getServerSideProps: GetServerSideProps = async () => {
-  const pokemon = await fetchPokemon()
+export const getServerSideProps: GetServerSideProps = async (props) => {
+  const params = props.params?.pokemon
+  let detailed: DetailedPokemon | undefined
+  let startIndex = 0
+
+  // If we're displaying a list, we know how to index
+  if (!params) {
+    startIndex = 0
+  } else if (params[0] === 'list') {
+    const parsedIndex = parseInt(params[1].split('-')[0])
+    console.log('setting starting index to ' + parsedIndex)
+    startIndex = isNaN(parsedIndex) ? 0 : parsedIndex
+  } else if (params[0] === 'detail') {
+    // Load a pokemon in the detailed var
+    // then based on the ID, set the startIndex
+  }
+
+  console.log(startIndex)
+  // if
+  const pokemon = await fetchPokemon(startIndex, 16)
+  // console.log(props)
 
   // Pass data to the page via props
   return { props: { pokemon } }

@@ -7,8 +7,12 @@ const client = new Client({
 })
 
 const QUERY = gql`
-  query {
-    pokemon_v2_pokemon {
+  query ($limit: Int = 16, $offset: Int = 0) {
+    pokemon_v2_pokemon(
+      limit: $limit
+      offset: $offset
+      order_by: { pokemon_species_id: asc }
+    ) {
       pokemon_species_id
       name
       pokemon_v2_pokemontypes {
@@ -42,9 +46,9 @@ const QUERY = gql`
 //   "__typename": "pokemon_v2_pokemon"
 // }
 
-export const fetchPokemon = async () => {
+export const fetchPokemon = async (offset: number, limit?: number) => {
   // FIXME: error-resistant
-  const result = await client.query(QUERY, {})
+  const result = await client.query(QUERY, { offset, limit })
   // TODO: With more configuration, we can generate automatic types for the
   // GraphQL schema, for now, this will do…
   const data: Record<string, any>[] = result.data.pokemon_v2_pokemon
