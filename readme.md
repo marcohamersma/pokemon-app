@@ -3,6 +3,7 @@
 - I considered the 16-pokemon limit to be a design-requirement rather than a technical/memory one
 - Search: This from a UX perspective, I think the typical autocomplete box makes a lot more sense because you can just use the down arrows to select an option. It's of course not as aesthetically appealing.
 - I haven't worked with nextJS for a long time
+- I found it kind of baffling that there is no good way of giving modals their own path. I was hoping to open the individual pokemon in a modal on top of the grid, without compromising URL navigation (I imagined a react-router like situation where the grid can always render, but another component can render if the /[pokemon-name] route matches.) The only official recommendation the nextjs repository gives you still navigates to an entirely different layout, it seems.
 
 ## Getting Started
 
