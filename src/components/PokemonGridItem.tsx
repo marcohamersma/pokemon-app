@@ -16,11 +16,12 @@ export const PokemonGridItem: React.FC<Props> = (props) => {
   return (
     <li>
       <Link
-        href={`/${encodeURIComponent(props.name)}`}
+        href={`/detail/${encodeURIComponent(props.slug)}`}
         className="bg-slate-400 rounded-md focus:ring block shadow-xl"
       >
         <div className="bg-white p-4">
-          <img src={image} alt="" />
+          {/* Tell the browser what the image proportions are going to be */}
+          <img src={image} alt="" width="1000" height="1000" />
         </div>
         <div className="p-2 text-center font-bold tracking-wide">
           {props.name}
