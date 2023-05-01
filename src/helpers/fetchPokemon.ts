@@ -43,8 +43,10 @@ const QUERY = gql`
 // }
 
 export const fetchPokemon = async () => {
-  // This could be more error-resistant
+  // FIXME: error-resistant
   const result = await client.query(QUERY, {})
+  // TODO: With more configuration, we can generate automatic types for the
+  // GraphQL schema, for now, this will do…
   const data: Record<string, any>[] = result.data.pokemon_v2_pokemon
 
   return data.map<PokemonListItem>((pokemon) => ({
@@ -55,8 +57,10 @@ export const fetchPokemon = async () => {
     ),
     // TODO: lots of opportunity for optimisation here of course. First of all,
     // I'd never dream to hotlink to someone else's server, but I'm not
-    // currently sure how to tie it in to Nextjs's image optimisation.
-    // We might also be able to set up an image-resizing proxy
+    // currently sure how to tell nextjs to optimise images that will only have
+    // a dynamic reference to them (i.e. <Image src={pokemon.image} />).
+    // Alternatively we could download and pre-process the images ourselves or
+    // serve them from a service that supports in-url transformations.
     image: `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/${pokemon.pokemon_species_id}.png`,
     // sprite:
   }))
